@@ -2,6 +2,7 @@
   "expo": {
     "name": "Biblia Viva",
     "slug": "biblia-viva",
+    "owner": "biblia-viva",
     "version": "0.1.0",
     "orientation": "portrait",
     "scheme": "bibliaviva",
