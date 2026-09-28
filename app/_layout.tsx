@@ -1,2 +1,10 @@
-import { Stack,usePathname } from 'expo-router';import { StatusBar } from 'expo-status-bar';import { View,StyleSheet } from 'react-native';import { StudyProvider } from '../src/context/StudyContext';import { PlanProvider } from '../src/context/PlanContext';import { ReadingProvider } from '../src/context/ReadingContext';import { BottomNav } from '../src/components/BottomNav';
-export default function RootLayout(){const path=usePathname();const showNav=!/^\/biblia\/.+/.test(path);return <StudyProvider><PlanProvider><ReadingProvider><View style={s.app}><StatusBar style="dark"/><View style={s.content}><Stack screenOptions={{headerShown:false}}/></View>{showNav&&<BottomNav/>}</View></ReadingProvider></PlanProvider></StudyProvider>};const s=StyleSheet.create({app:{flex:1,backgroundColor:'#F7F5EF'},content:{flex:1}});
+import { Stack,usePathname } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { View } from 'react-native';
+import { StudyProvider } from '../src/context/StudyContext';
+import { PlanProvider } from '../src/context/PlanContext';
+import { ReadingProvider } from '../src/context/ReadingContext';
+import { ReaderSettingsProvider,useReaderSettings } from '../src/context/ReaderSettingsContext';
+import { BottomNav } from '../src/components/BottomNav';
+function Shell(){const path=usePathname();const {theme}=useReaderSettings();const showNav=!/^\/biblia\/.+/.test(path);return <View style={{flex:1,backgroundColor:theme.background}}><StatusBar style={theme.status}/><View style={{flex:1}}><Stack screenOptions={{headerShown:false,contentStyle:{backgroundColor:theme.background}}}/></View>{showNav&&<BottomNav/>}</View>}
+export default function RootLayout(){return <ReaderSettingsProvider><StudyProvider><PlanProvider><ReadingProvider><Shell/></ReadingProvider></PlanProvider></StudyProvider></ReaderSettingsProvider>}
