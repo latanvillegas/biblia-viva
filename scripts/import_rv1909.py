@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, re, sys, urllib.request, zipfile
+import json, re, urllib.request, zipfile
 from pathlib import Path
 
 URL='https://ebible.org/Scriptures/spaRV1909_vpl.zip'
@@ -16,45 +16,36 @@ def decode(data):
 
 def parse_line(line):
     line=line.strip()
-    patterns=[
-      r'^([1-3]?[A-Za-z]{2,})\s+(\d+):(\d+)\s+(.+)$',
-      r'^([1-3]?[A-Za-z]{2,})\s+(\d+)\s+(\d+)\s+(.+)$',
-    ]
-    for pattern in patterns:
+    for pattern in (r'^([1-3]?[A-Za-z]{2,})\s+(\d+):(\d+)\s+(.+)$',r'^([1-3]?[A-Za-z]{2,})\s+(\d+)\s+(\d+)\s+(.+)$'):
         m=re.match(pattern,line)
         if m:
-            code=m.group(1).upper(); book=CODE_MAP.get(code)
+            book=CODE_MAP.get(m.group(1).upper())
             if book:return book,int(m.group(2)),int(m.group(3)),m.group(4).strip()
     return None
 
 def main():
     zip_path=Path('/tmp/spaRV1909_vpl.zip')
     print('Descargando RV1909 desde eBible.org…')
-    urllib.request.urlretrieve(URL,zip_path)
-    chapters={}
-    parsed=0
+    req=urllib.request.Request(URL,headers={'User-Agent':'BibliaViva/0.1 (+https://github.com/latanvillegas/biblia-viva)','Accept':'application/zip,*/*'})
+    with urllib.request.urlopen(req,timeout=60) as response:
+        zip_path.write_bytes(response.read())
+    chapters={};parsed=0
     with zipfile.ZipFile(zip_path) as z:
-        candidates=[n for n in z.namelist() if n.lower().endswith(('.txt','.vpl'))]
-        if not candidates: candidates=z.namelist()
+        candidates=[n for n in z.namelist() if n.lower().endswith(('.txt','.vpl'))] or z.namelist()
         for name in candidates:
-            if name.endswith('/'): continue
+            if name.endswith('/'):continue
             try:text=decode(z.read(name))
             except Exception:continue
             for line in text.splitlines():
                 item=parse_line(line)
                 if not item:continue
-                book,chapter,verse,verse_text=item
-                key=f'{book}.{chapter}'
-                arr=chapters.setdefault(key,[])
+                book,chapter,verse,verse_text=item;key=f'{book}.{chapter}';arr=chapters.setdefault(key,[])
                 while len(arr)<verse:arr.append('')
-                arr[verse-1]=verse_text
-                parsed+=1
+                arr[verse-1]=verse_text;parsed+=1
     chapters={k:v for k,v in chapters.items() if any(v)}
-    if parsed<30000 or len(chapters)<1100:
-        raise RuntimeError(f'Importación incompleta: {parsed} versículos, {len(chapters)} capítulos')
+    if parsed<30000 or len(chapters)<1100:raise RuntimeError(f'Importación incompleta: {parsed} versículos, {len(chapters)} capítulos')
     payload=json.dumps(chapters,ensure_ascii=False,separators=(',',':'))
     OUT.write_text('// Generado desde eBible.org · RV1909 · Dominio público\nexport const rv1909Chapters: Record<string, string[]> = '+payload+';\n',encoding='utf-8')
     print(f'OK: {parsed} versículos en {len(chapters)} capítulos')
 
-if __name__=='__main__':
-    main()
+if __name__=='__main__':main()
