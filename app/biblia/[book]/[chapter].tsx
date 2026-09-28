@@ -1,51 +1,10 @@
-import { Link, useLocalSearchParams } from 'expo-router';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Link,useLocalSearchParams } from 'expo-router';
+import { useState } from 'react';
+import { Pressable,SafeAreaView,ScrollView,StyleSheet,Text,TextInput,View } from 'react-native';
 import { getBook } from '../../../src/data/books';
-
-const demoVerses = [
-  'En el principio creó Dios los cielos y la tierra.',
-  'La Palabra de Dios guía nuestro camino y alimenta nuestra fe.',
-  'Este lector ya está preparado para recibir una traducción bíblica autorizada.',
-];
-
-export default function ReaderScreen() {
-  const { book: bookId, chapter } = useLocalSearchParams<{ book: string; chapter: string }>();
-  const book = getBook(bookId);
-
-  if (!book) return <SafeAreaView style={styles.safeArea}><Text>Libro no encontrado.</Text></SafeAreaView>;
-
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Link href={{ pathname: '/biblia/[book]', params: { book: book.id } }} style={styles.back}>‹ {book.name}</Link>
-        <Text style={styles.title}>{book.name} {chapter}</Text>
-        <Text style={styles.translation}>Texto de demostración · fuente bíblica pendiente</Text>
-        <View style={styles.reader}>
-          {demoVerses.map((verse, index) => (
-            <Text key={index} style={styles.verse}>
-              <Text style={styles.number}>{index + 1} </Text>{verse}
-            </Text>
-          ))}
-        </View>
-        <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Fuente bíblica</Text>
-          <Text style={styles.noticeText}>Esta pantalla usa contenido de demostración. La arquitectura permitirá conectar una traducción de dominio público o debidamente licenciada.</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#F7F5EF' },
-  container: { padding: 24, paddingBottom: 56 },
-  back: { color: '#556B2F', fontSize: 16, fontWeight: '700', marginTop: 12, marginBottom: 20 },
-  title: { fontSize: 32, fontWeight: '800', color: '#1F261C' },
-  translation: { fontSize: 13, color: '#7A8076', marginTop: 7, marginBottom: 28 },
-  reader: { backgroundColor: '#FFFFFF', borderRadius: 22, padding: 22 },
-  verse: { fontSize: 19, lineHeight: 31, color: '#2A3027', marginBottom: 16 },
-  number: { fontSize: 12, fontWeight: '800', color: '#71805C' },
-  notice: { marginTop: 22, padding: 18, backgroundColor: '#E9EDDF', borderRadius: 16 },
-  noticeTitle: { fontWeight: '800', color: '#25321F', marginBottom: 5 },
-  noticeText: { color: '#596056', lineHeight: 21 },
-});
+import { useStudy } from '../../../src/context/StudyContext';
+const demoVerses=['En el principio creó Dios los cielos y la tierra.','La Palabra de Dios guía nuestro camino y alimenta nuestra fe.','Este lector ya está preparado para recibir una traducción bíblica autorizada.'];
+export default function ReaderScreen(){const {book:bookId,chapter}=useLocalSearchParams<{book:string;chapter:string}>();const book=getBook(bookId);const chapterNumber=Number(chapter);const {state,toggleFavorite,saveNote}=useStudy();const [selected,setSelected]=useState(1);const ref={bookId,chapter:chapterNumber,verse:selected};const id=`${bookId}.${chapterNumber}.${selected}`;const [note,setNote]=useState(state.notes.find(x=>x.id===id)?.text??'');if(!book)return <SafeAreaView><Text>Libro no encontrado.</Text></SafeAreaView>;
+const favorite=state.favorites.some(x=>x.id===id);
+return <SafeAreaView style={s.safe}><ScrollView contentContainerStyle={s.container} keyboardShouldPersistTaps="handled"><Link href={{pathname:'/biblia/[book]',params:{book:book.id}}} style={s.back}>‹ {book.name}</Link><Text style={s.title}>{book.name} {chapter}</Text><Text style={s.translation}>Contenido de demostración · toca un versículo para estudiarlo</Text><View style={s.reader}>{demoVerses.map((text,i)=>{const n=i+1;return <Pressable key={n} onPress={()=>{setSelected(n);setNote(state.notes.find(x=>x.id===`${bookId}.${chapterNumber}.${n}`)?.text??'')}} style={[s.verseBox,selected===n&&s.selected]}><Text style={s.verse}><Text style={s.number}>{n} </Text>{text}</Text></Pressable>})}</View><View style={s.tools}><Text style={s.toolTitle}>Versículo {selected}</Text><Pressable onPress={()=>toggleFavorite(ref)} style={s.button}><Text style={s.buttonText}>{favorite?'★ Quitar de favoritos':'☆ Guardar favorito'}</Text></Pressable><TextInput value={note} onChangeText={setNote} placeholder="Escribe una nota personal…" multiline style={s.input}/><Pressable onPress={()=>saveNote(ref,note)} style={s.save}><Text style={s.saveText}>Guardar nota</Text></Pressable></View></ScrollView></SafeAreaView>}
+const s=StyleSheet.create({safe:{flex:1,backgroundColor:'#F7F5EF'},container:{padding:24,paddingBottom:56},back:{color:'#556B2F',fontSize:16,fontWeight:'700',marginTop:12,marginBottom:20},title:{fontSize:32,fontWeight:'800',color:'#1F261C'},translation:{fontSize:13,color:'#7A8076',marginTop:7,marginBottom:22},reader:{backgroundColor:'#FFF',borderRadius:22,padding:14},verseBox:{padding:10,borderRadius:12},selected:{backgroundColor:'#E9EDDF'},verse:{fontSize:19,lineHeight:31,color:'#2A3027'},number:{fontSize:12,fontWeight:'800',color:'#71805C'},tools:{marginTop:18,backgroundColor:'#FFF',padding:18,borderRadius:18},toolTitle:{fontSize:17,fontWeight:'800',color:'#25321F',marginBottom:12},button:{paddingVertical:12},buttonText:{fontWeight:'800',color:'#556B2F'},input:{minHeight:90,backgroundColor:'#F7F5EF',borderRadius:12,padding:14,textAlignVertical:'top',marginTop:8},save:{backgroundColor:'#25321F',padding:14,borderRadius:12,marginTop:10},saveText:{color:'#FFF',fontWeight:'800',textAlign:'center'}});
