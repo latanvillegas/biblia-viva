@@ -1,24 +1,9 @@
 {
   "expo": {
-    "name": "Biblia Viva",
-    "slug": "biblia-viva",
-    "owner": "biblia-viva",
-    "version": "0.1.0",
-    "orientation": "portrait",
-    "scheme": "bibliaviva",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.bibliaviva.app"
-    },
-    "android": {
-      "package": "com.bibliaviva.app",
-      "versionCode": 1
-    },
-    "plugins": ["expo-router"],
-    "experiments": {
-      "typedRoutes": true
-    }
+    "name":"Biblia Viva","slug":"biblia-viva","owner":"biblia-viva","version":"0.1.0","orientation":"portrait","scheme":"bibliaviva","userInterfaceStyle":"automatic","newArchEnabled":true,
+    "ios":{"supportsTablet":true,"bundleIdentifier":"com.bibliaviva.app"},
+    "android":{"package":"com.bibliaviva.app","versionCode":1},
+    "plugins":["expo-router",["expo-speech-recognition",{"microphonePermission":"Permite que Biblia Viva use el micrófono para buscar pasajes con tu voz.","speechRecognitionPermission":"Permite que Biblia Viva reconozca tu voz para buscar libros, capítulos, versículos y palabras."}]],
+    "experiments":{"typedRoutes":true}
   }
 }
