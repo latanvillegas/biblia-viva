@@ -27,9 +27,18 @@ jobs:
         run: |
           if [ -z "$EXPO_TOKEN" ]; then
             echo "Missing EXPO_TOKEN repository secret."
-            echo "Create an Expo access token and save it in GitHub as EXPO_TOKEN before running this workflow."
             exit 1
           fi
+
+      - name: Link project with EAS
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: npx eas-cli@latest init --account biblia-viva --non-interactive
+
+      - name: Show EAS project info
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: npx eas-cli@latest project:info
 
       - name: Build preview APK with EAS
         env:
