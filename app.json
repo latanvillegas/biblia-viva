@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Biblia Viva",
+    "slug": "biblia-viva",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "bibliaviva",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bibliaviva.app"
+    },
+    "android": {
+      "package": "com.bibliaviva.app"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
