@@ -12,7 +12,8 @@
       "bundleIdentifier": "com.bibliaviva.app"
     },
     "android": {
-      "package": "com.bibliaviva.app"
+      "package": "com.bibliaviva.app",
+      "versionCode": 1
     },
     "plugins": ["expo-router"],
     "experiments": {
