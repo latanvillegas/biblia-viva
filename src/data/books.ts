@@ -1,25 +1,9 @@
-export type BibleBook = {
-  id: string;
-  name: string;
-  testament: 'Antiguo' | 'Nuevo';
-  chapters: number;
-};
+export type BibleBook = { id: string; name: string; testament: 'Antiguo' | 'Nuevo'; chapters: number };
 
 export const bibleBooks: BibleBook[] = [
-  { id: 'genesis', name: 'Génesis', testament: 'Antiguo', chapters: 50 },
-  { id: 'exodo', name: 'Éxodo', testament: 'Antiguo', chapters: 40 },
-  { id: 'levitico', name: 'Levítico', testament: 'Antiguo', chapters: 27 },
-  { id: 'numeros', name: 'Números', testament: 'Antiguo', chapters: 36 },
-  { id: 'deuteronomio', name: 'Deuteronomio', testament: 'Antiguo', chapters: 34 },
-  { id: 'mateo', name: 'Mateo', testament: 'Nuevo', chapters: 28 },
-  { id: 'marcos', name: 'Marcos', testament: 'Nuevo', chapters: 16 },
-  { id: 'lucas', name: 'Lucas', testament: 'Nuevo', chapters: 24 },
-  { id: 'juan', name: 'Juan', testament: 'Nuevo', chapters: 21 },
-  { id: 'hechos', name: 'Hechos', testament: 'Nuevo', chapters: 28 },
-  { id: 'romanos', name: 'Romanos', testament: 'Nuevo', chapters: 16 },
-  { id: 'apocalipsis', name: 'Apocalipsis', testament: 'Nuevo', chapters: 22 },
+  { id:'genesis',name:'Génesis',testament:'Antiguo',chapters:50 },{ id:'exodo',name:'Éxodo',testament:'Antiguo',chapters:40 },{ id:'levitico',name:'Levítico',testament:'Antiguo',chapters:27 },{ id:'numeros',name:'Números',testament:'Antiguo',chapters:36 },{ id:'deuteronomio',name:'Deuteronomio',testament:'Antiguo',chapters:34 },
+  { id:'josue',name:'Josué',testament:'Antiguo',chapters:24 },{ id:'jueces',name:'Jueces',testament:'Antiguo',chapters:21 },{ id:'rut',name:'Rut',testament:'Antiguo',chapters:4 },{ id:'1-samuel',name:'1 Samuel',testament:'Antiguo',chapters:31 },{ id:'2-samuel',name:'2 Samuel',testament:'Antiguo',chapters:24 },{ id:'1-reyes',name:'1 Reyes',testament:'Antiguo',chapters:22 },{ id:'2-reyes',name:'2 Reyes',testament:'Antiguo',chapters:25 },{ id:'1-cronicas',name:'1 Crónicas',testament:'Antiguo',chapters:29 },{ id:'2-cronicas',name:'2 Crónicas',testament:'Antiguo',chapters:36 },{ id:'esdras',name:'Esdras',testament:'Antiguo',chapters:10 },{ id:'nehemias',name:'Nehemías',testament:'Antiguo',chapters:13 },{ id:'ester',name:'Ester',testament:'Antiguo',chapters:10 },{ id:'job',name:'Job',testament:'Antiguo',chapters:42 },{ id:'salmos',name:'Salmos',testament:'Antiguo',chapters:150 },{ id:'proverbios',name:'Proverbios',testament:'Antiguo',chapters:31 },{ id:'eclesiastes',name:'Eclesiastés',testament:'Antiguo',chapters:12 },{ id:'cantares',name:'Cantares',testament:'Antiguo',chapters:8 },{ id:'isaias',name:'Isaías',testament:'Antiguo',chapters:66 },{ id:'jeremias',name:'Jeremías',testament:'Antiguo',chapters:52 },{ id:'lamentaciones',name:'Lamentaciones',testament:'Antiguo',chapters:5 },{ id:'ezequiel',name:'Ezequiel',testament:'Antiguo',chapters:48 },{ id:'daniel',name:'Daniel',testament:'Antiguo',chapters:12 },{ id:'oseas',name:'Oseas',testament:'Antiguo',chapters:14 },{ id:'joel',name:'Joel',testament:'Antiguo',chapters:3 },{ id:'amos',name:'Amós',testament:'Antiguo',chapters:9 },{ id:'abdias',name:'Abdías',testament:'Antiguo',chapters:1 },{ id:'jonas',name:'Jonás',testament:'Antiguo',chapters:4 },{ id:'miqueas',name:'Miqueas',testament:'Antiguo',chapters:7 },{ id:'nahum',name:'Nahúm',testament:'Antiguo',chapters:3 },{ id:'habacuc',name:'Habacuc',testament:'Antiguo',chapters:3 },{ id:'sofonias',name:'Sofonías',testament:'Antiguo',chapters:3 },{ id:'hageo',name:'Hageo',testament:'Antiguo',chapters:2 },{ id:'zacarias',name:'Zacarías',testament:'Antiguo',chapters:14 },{ id:'malaquias',name:'Malaquías',testament:'Antiguo',chapters:4 },
+  { id:'mateo',name:'Mateo',testament:'Nuevo',chapters:28 },{ id:'marcos',name:'Marcos',testament:'Nuevo',chapters:16 },{ id:'lucas',name:'Lucas',testament:'Nuevo',chapters:24 },{ id:'juan',name:'Juan',testament:'Nuevo',chapters:21 },{ id:'hechos',name:'Hechos',testament:'Nuevo',chapters:28 },{ id:'romanos',name:'Romanos',testament:'Nuevo',chapters:16 },{ id:'1-corintios',name:'1 Corintios',testament:'Nuevo',chapters:16 },{ id:'2-corintios',name:'2 Corintios',testament:'Nuevo',chapters:13 },{ id:'galatas',name:'Gálatas',testament:'Nuevo',chapters:6 },{ id:'efesios',name:'Efesios',testament:'Nuevo',chapters:6 },{ id:'filipenses',name:'Filipenses',testament:'Nuevo',chapters:4 },{ id:'colosenses',name:'Colosenses',testament:'Nuevo',chapters:4 },{ id:'1-tesalonicenses',name:'1 Tesalonicenses',testament:'Nuevo',chapters:5 },{ id:'2-tesalonicenses',name:'2 Tesalonicenses',testament:'Nuevo',chapters:3 },{ id:'1-timoteo',name:'1 Timoteo',testament:'Nuevo',chapters:6 },{ id:'2-timoteo',name:'2 Timoteo',testament:'Nuevo',chapters:4 },{ id:'tito',name:'Tito',testament:'Nuevo',chapters:3 },{ id:'filemon',name:'Filemón',testament:'Nuevo',chapters:1 },{ id:'hebreos',name:'Hebreos',testament:'Nuevo',chapters:13 },{ id:'santiago',name:'Santiago',testament:'Nuevo',chapters:5 },{ id:'1-pedro',name:'1 Pedro',testament:'Nuevo',chapters:5 },{ id:'2-pedro',name:'2 Pedro',testament:'Nuevo',chapters:3 },{ id:'1-juan',name:'1 Juan',testament:'Nuevo',chapters:5 },{ id:'2-juan',name:'2 Juan',testament:'Nuevo',chapters:1 },{ id:'3-juan',name:'3 Juan',testament:'Nuevo',chapters:1 },{ id:'judas',name:'Judas',testament:'Nuevo',chapters:1 },{ id:'apocalipsis',name:'Apocalipsis',testament:'Nuevo',chapters:22 }
 ];
 
-export function getBook(id: string) {
-  return bibleBooks.find((book) => book.id === id);
-}
+export function getBook(id: string) { return bibleBooks.find((book) => book.id === id); }
